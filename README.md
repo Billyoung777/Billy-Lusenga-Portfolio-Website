@@ -31,6 +31,7 @@ Open `index.html` in a browser, or serve the folder with any simple static web s
 ├── docs/
 │   ├── PROJECTS_INDEX.md
 │   └── NETWORK-LAB-QUICK-REFERENCE.md
+├── Billy_Lusenga_Master_CV.pdf
 └── README.md
 ```
 
