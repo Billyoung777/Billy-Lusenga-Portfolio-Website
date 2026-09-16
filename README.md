@@ -12,11 +12,18 @@ This package updates the existing portfolio into a small portfolio site with ded
 
 Open `index.html` in a browser, or serve the folder with any simple static web server.
 
-## Suggested GitHub structure
+## Portfolio GitHub structure
 
 ```text
 /
+├── Billy_Lusenga_Master_CV.pdf
 ├── index.html
+├── assets/
+│   └── certificates/
+│       ├── Networking_Basics.pdf
+│       ├── Networking_Essentials.pdf
+│       ├── Network_Addressing_and_Basic_Troubleshooting.pdf
+│       └── Network_Support_and_Security.pdf
 ├── css/
 │   └── style.css
 ├── js/
@@ -30,11 +37,11 @@ Open `index.html` in a browser, or serve the folder with any simple static web s
 │       └── index.html
 ├── docs/
 │   ├── PROJECTS_INDEX.md
-│   └── NETWORK-LAB-QUICK-REFERENCE.md
-├── Billy_Lusenga_Master_CV.pdf
+│   ├── NETWORK-LAB-QUICK-REFERENCE.md
+│   └── TechNexusInc Enterprise IT Infrastructure & Network Lab.pkt
 └── README.md
 ```
 
-## Important
+## Project resources
 
-The actual Cisco Packet Tracer `.pkt` file and screenshots are not included in this package because they were not available as downloadable project assets in the current upload. Add them later under the Enterprise Network Lab folder when available.
+The Cisco Packet Tracer network lab file is available under `docs/`. Supporting project documentation is also included in the `docs/` directory, and professional certificates are stored under `assets/certificates/`.

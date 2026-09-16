@@ -1,21 +1,256 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🌐 Enterprise Network Lab | Billy Lusenga</title><meta name="description" content="A Cisco Packet Tracer enterprise-style lab built to understand network architecture before implementation, then configure VLANs, Layer-3 gateways, DHCP, DNS, wireless connectivity and guest-network isolation.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../css/style.css">
-<style>.project-page{padding-top:120px;padding-bottom:100px}.project-hero{padding:65px 0 45px;border-bottom:1px solid var(--border)}.project-kicker{color:#64ffda;font:700 .7rem ui-monospace,monospace;letter-spacing:.16em}.project-hero h1{font-size:clamp(2.8rem,6vw,5rem);line-height:1.02;margin:14px 0}.project-hero .lead{max-width:850px;color:var(--muted);font-size:1.05rem}.project-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.project-meta span{padding:7px 10px;border:1px solid var(--border);border-radius:999px;color:#aebdcc;font:600 .65rem ui-monospace,monospace}.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:45px}.doc-card{padding:28px;border:1px solid var(--border);border-radius:17px;background:var(--panel)}.doc-card.wide{grid-column:span 2}.doc-card h2{font-size:1.25rem;margin-bottom:12px}.doc-card p,.doc-card li{color:#aebbc9;font-size:.88rem}.doc-card ul{padding-left:20px}.doc-card li{margin:7px 0}.back-link{display:inline-flex;color:var(--accent);margin-top:30px;font-weight:700;font-size:.8rem}@media(max-width:760px){.doc-grid{grid-template-columns:1fr}.doc-card.wide{grid-column:auto}}</style></head>
-<body><header class="site-header scrolled"><nav class="nav container"><a class="brand" href="../../index.html"><span class="brand-mark">&lt;/&gt;</span><span>Billy Lusenga<span class="accent">.</span></span></a><a class="btn btn-secondary" href="../../index.html#projects">← Back to Projects</a></nav></header>
-<main class="project-page"><div class="container">
-<section class="project-hero"><p class="project-kicker">01 / NETWORKING · DOCUMENTED LAB</p><h1>🌐 Enterprise Network Lab</h1><p class="lead">A Cisco Packet Tracer enterprise-style lab built to understand network architecture before implementation, then configure VLANs, Layer-3 gateways, DHCP, DNS, wireless connectivity and guest-network isolation.</p><div class="project-meta"><span>Evidence-driven documentation</span><span>Portfolio Project</span></div></section>
-<div class="doc-grid">
-<article class="doc-card"><h2>01 — Objective</h2><p>Demonstrate the ability to design and troubleshoot a segmented small-enterprise network and explain how the devices and services connect.</p></article>
-<article class="doc-card"><h2>02 — Architecture / Design</h2><p>Internet/ISP → R1-EDGE → FW1 → SW1-CORE (Layer 3) → SW2-F1, SW3-F2 and SW4-F3. VLAN gateways live on SW1-CORE. Access switches connect endpoints, servers, printer and wireless access. VLANs used: 10 Management, 20 Servers, 30 IT-ADMIN, 40 Users, 50 Printers, 60 Corporate Wi-Fi and 70 Guest Wi-Fi.</p></article>
-<article class="doc-card"><h2>03 — Technologies</h2><ul><li>Cisco Packet Tracer</li><li>802.1Q VLANs</li><li>Layer-3 switching / SVIs</li><li>DHCP</li><li>DNS</li><li>Wireless AP</li><li>Extended ACL / guest isolation</li></ul></article>
-<article class="doc-card"><h2>04 — Implementation</h2><ul><li>Created VLANs on the switching layer and trunk/access links.</li><li>Configured SW1-CORE SVIs with 10.10.x.1 gateway addresses.</li><li>Configured DHCP pools for IT-ADMIN, USERS, CORP-WIFI and GUEST-WIFI.</li><li>Integrated AP01 with the corporate wireless network and assigned wireless clients to the lab VLANs.</li><li>Created DNS records on DC01 for dc01.technexus.local, fs01.technexus.local and intranet.technexus.local.</li><li>Applied and tested a guest isolation ACL intended to block Guest-WiFi access to internal VLANs.</li></ul></article>
-<article class="doc-card wide"><h2>05 — Testing & Evidence</h2><ul><li>DHCP clients received addresses such as IT-ADMIN 10.10.30.100/101 and Users 10.10.40.100–103.</li><li>Inter-VLAN routing tests returned replies from gateways and internal hosts.</li><li>PC-IT01 successfully resolved and pinged dc01.technexus.local and fs01.technexus.local after DNS records were corrected.</li><li>The intranet site was reachable directly at 10.10.20.20; hostname resolution was separately tested.</li><li>Guest ACL verification showed the ACL entries and hit counts, while Packet Tracer reported the SVI as having no inbound ACL in one verification view. This is retained as a troubleshooting note rather than being presented as fully resolved.</li></ul></article>
-<article class="doc-card"><h2>06 — Lessons Learned</h2><ul><li>Packet Tracer's CLI differs by device model; some show commands only worked from privileged EXEC mode.</li><li>DHCP, routing and DNS can each be working independently, so testing should isolate one layer at a time.</li><li>ACL verification needs both configuration inspection and actual traffic tests.</li></ul></article>
-<article class="doc-card"><h2>07 — Next Improvements</h2><ul><li>Add stronger management controls and device hardening.</li><li>Add a cleaner evidence screenshot set and final topology diagram.</li><li>Resolve and document the final guest isolation implementation if the lab is extended.</li></ul></article>
-</div>
-<a class="back-link" href="../../index.html#projects">← Return to portfolio projects</a>
-</div></main></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>🌐 Enterprise Network Lab | Billy Lusenga</title>
+    <meta
+      name="description"
+      content="A Cisco Packet Tracer enterprise-style lab built to understand network architecture before implementation, then configure VLANs, Layer-3 gateways, DHCP, DNS, wireless connectivity and guest-network isolation."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+      .project-page {
+        padding-top: 120px;
+        padding-bottom: 100px;
+      }
+      .project-hero {
+        padding: 65px 0 45px;
+        border-bottom: 1px solid var(--border);
+      }
+      .project-kicker {
+        color: #64ffda;
+        font:
+          700 0.7rem ui-monospace,
+          monospace;
+        letter-spacing: 0.16em;
+      }
+      .project-hero h1 {
+        font-size: clamp(2.8rem, 6vw, 5rem);
+        line-height: 1.02;
+        margin: 14px 0;
+      }
+      .project-hero .lead {
+        max-width: 850px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 25px;
+      }
+      .project-meta span {
+        padding: 7px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: #aebdcc;
+        font:
+          600 0.65rem ui-monospace,
+          monospace;
+      }
+      .doc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 45px;
+      }
+      .doc-card {
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 17px;
+        background: var(--panel);
+      }
+      .doc-card.wide {
+        grid-column: span 2;
+      }
+      .doc-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+      }
+      .doc-card p,
+      .doc-card li {
+        color: #aebbc9;
+        font-size: 0.88rem;
+      }
+      .doc-card ul {
+        padding-left: 20px;
+      }
+      .doc-card li {
+        margin: 7px 0;
+      }
+      .back-link {
+        display: inline-flex;
+        color: var(--accent);
+        margin-top: 30px;
+        font-weight: 700;
+        font-size: 0.8rem;
+      }
+      @media (max-width: 760px) {
+        .doc-grid {
+          grid-template-columns: 1fr;
+        }
+        .doc-card.wide {
+          grid-column: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header scrolled">
+      <nav class="nav container">
+        <a class="brand" href="../../index.html"
+          ><span class="brand-mark">&lt;/&gt;</span
+          ><span>Billy Lusenga<span class="accent">.</span></span></a
+        ><a class="btn btn-secondary" href="../../index.html#projects"
+          >← Back to Projects</a
+        >
+      </nav>
+    </header>
+    <main class="project-page">
+      <div class="container">
+        <section class="project-hero">
+          <p class="project-kicker">01 / NETWORKING · DOCUMENTED LAB</p>
+          <h1>🌐 Enterprise Network Lab</h1>
+          <p class="lead">
+            A Cisco Packet Tracer enterprise-style lab built to understand
+            network architecture before implementation, then configure VLANs,
+            Layer-3 gateways, DHCP, DNS, wireless connectivity and guest-network
+            isolation.
+          </p>
+          <div class="project-meta">
+            <span>Evidence-driven documentation</span
+            ><span>Portfolio Project</span>
+          </div>
+        </section>
+        <div class="doc-grid">
+          <article class="doc-card">
+            <h2>01 — Objective</h2>
+            <p>
+              Demonstrate the ability to design and troubleshoot a segmented
+              small-enterprise network and explain how the devices and services
+              connect.
+            </p>
+          </article>
+          <article class="doc-card">
+            <h2>02 — Architecture / Design</h2>
+            <p>
+              Internet/ISP → R1-EDGE → FW1 → SW1-CORE (Layer 3) → SW2-F1, SW3-F2
+              and SW4-F3. VLAN gateways live on SW1-CORE. Access switches
+              connect endpoints, servers, printer and wireless access. VLANs
+              used: 10 Management, 20 Servers, 30 IT-ADMIN, 40 Users, 50
+              Printers, 60 Corporate Wi-Fi and 70 Guest Wi-Fi.
+            </p>
+          </article>
+          <article class="doc-card">
+            <h2>03 — Technologies</h2>
+            <ul>
+              <li>Cisco Packet Tracer</li>
+              <li>802.1Q VLANs</li>
+              <li>Layer-3 switching / SVIs</li>
+              <li>DHCP</li>
+              <li>DNS</li>
+              <li>Wireless AP</li>
+              <li>Extended ACL / guest isolation</li>
+            </ul>
+          </article>
+          <article class="doc-card">
+            <h2>04 — Implementation</h2>
+            <ul>
+              <li>
+                Created VLANs on the switching layer and trunk/access links.
+              </li>
+              <li>
+                Configured SW1-CORE SVIs with 10.10.x.1 gateway addresses.
+              </li>
+              <li>
+                Configured DHCP pools for IT-ADMIN, USERS, CORP-WIFI and
+                GUEST-WIFI.
+              </li>
+              <li>
+                Integrated AP01 with the corporate wireless network and assigned
+                wireless clients to the lab VLANs.
+              </li>
+              <li>
+                Created DNS records on DC01 for dc01.technexus.local,
+                fs01.technexus.local and intranet.technexus.local.
+              </li>
+              <li>
+                Applied and tested a guest isolation ACL intended to block
+                Guest-WiFi access to internal VLANs.
+              </li>
+            </ul>
+          </article>
+          <article class="doc-card wide">
+            <h2>05 — Testing & Evidence</h2>
+            <ul>
+              <li>
+                DHCP clients received addresses such as IT-ADMIN
+                10.10.30.100/101 and Users 10.10.40.100–103.
+              </li>
+              <li>
+                Inter-VLAN routing tests returned replies from gateways and
+                internal hosts.
+              </li>
+              <li>
+                PC-IT01 successfully resolved and pinged dc01.technexus.local
+                and fs01.technexus.local after DNS records were corrected.
+              </li>
+              <li>
+                The intranet site was reachable directly at 10.10.20.20;
+                hostname resolution was separately tested.
+              </li>
+              <li>
+                Guest ACL verification showed the ACL entries and hit counts,
+                while Packet Tracer reported the SVI as having no inbound ACL in
+                one verification view. This is retained as a troubleshooting
+                note rather than being presented as fully resolved.
+              </li>
+            </ul>
+          </article>
+          <article class="doc-card">
+            <h2>06 — Lessons Learned</h2>
+            <ul>
+              <li>
+                Packet Tracer's CLI differs by device model; some show commands
+                only worked from privileged EXEC mode.
+              </li>
+              <li>
+                DHCP, routing and DNS can each be working independently, so
+                testing should isolate one layer at a time.
+              </li>
+              <li>
+                ACL verification needs both configuration inspection and actual
+                traffic tests.
+              </li>
+            </ul>
+          </article>
+          <article class="doc-card">
+            <h2>07 — Next Improvements</h2>
+            <ul>
+              <li>Add stronger management controls and device hardening.</li>
+              <li>
+                Add a cleaner evidence screenshot set and final topology
+                diagram.
+              </li>
+              <li>
+                Resolve and document the final guest isolation implementation if
+                the lab is extended.
+              </li>
+            </ul>
+          </article>
+        </div>
+        <a class="back-link" href="../../index.html#projects"
+          >← Return to portfolio projects</a
+        >
+      </div>
+    </main>
+  </body>
+</html>
