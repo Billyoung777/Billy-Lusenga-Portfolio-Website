@@ -1,4 +1,5 @@
-# Billy Lusenga — Updated IT Portfolio
+# Billy Lusenga — IT Portfolio
+![Billy-Lusenga-Portfolio-Website Banner](assets/Billy-Lusenga-Portfolio-Snapshot.png)
 
 This package updates the existing portfolio into a small portfolio site with dedicated technical project case-study pages.
 
